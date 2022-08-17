@@ -255,5 +255,7 @@ zsdoc/data
 # Zunit tests' output
 /tests/_output/*
 !/tests/_output/.gitkeep
+baekjoon_crawler.py
+baekjoon_data
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,zsh,webstorm,visualstudiocode
