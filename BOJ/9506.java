@@ -25,7 +25,7 @@ public class Main {
             sb.append(n).append(" = ").append(queue.poll());
             while (!queue.isEmpty()) {
                 sb.append(" + ").append(queue.poll());
-            }
+            }w
             sb.append("\n");
         }
 
