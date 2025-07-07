@@ -1,0 +1,38 @@
+WITH UNAVALABLE_CARS AS (
+    SELECT
+        *
+    FROM
+        CAR_RENTAL_COMPANY_RENTAL_HISTORY ch
+    INNER JOIN
+        CAR_RENTAL_COMPANY_CAR cc USING (CAR_ID)
+    WHERE
+        (cc.CAR_TYPE = 'SUV' OR cc.CAR_TYPE = '세단')
+        AND
+        (START_DATE <= '2022-11-30' AND END_DATE >= '2022-11-01')
+)
+
+SELECT
+    cc.CAR_ID,
+    cc.CAR_TYPE,
+    FLOOR((cc.DAILY_FEE * (1 - dp.DISCOUNT_RATE / 100)) * 30) FEE
+FROM
+    CAR_RENTAL_COMPANY_CAR cc
+LEFT JOIN
+    CAR_RENTAL_COMPANY_DISCOUNT_PLAN dp ON dp.CAR_TYPE = cc.CAR_TYPE
+    AND
+    dp.DURATION_TYPE = '30일 이상'
+WHERE
+    (cc.CAR_TYPE = 'SUV' OR cc.CAR_TYPE = '세단')
+    AND
+    cc.CAR_ID NOT IN (
+        SELECT
+            DISTINCT CAR_ID
+        FROM
+            UNAVALABLE_CARS
+    )
+HAVING
+    FEE >= 500000 AND FEE < 2000000
+ORDER BY
+    FEE DESC,
+    cc.CAR_TYPE,
+    cc.CAR_ID DESC
