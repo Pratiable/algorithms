@@ -14,7 +14,7 @@ public class Main {
 
         for (int i = 1; i < S.length(); i++) {
             int cur = S.charAt(i) - 'a';
-            count[i] = count[i - 1].clone();
+            System.arraycopy(count[i - 1], 0, count[i], 0, 26);
             count[i][cur]++;
         }
 
